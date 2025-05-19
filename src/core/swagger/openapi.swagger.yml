@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: Blog API
+  version: 1.0.0
+  description: Blog API documentation
+
+tags:
+  - name: Testing
+    description: API for clearing the database
+  - name: Blog
+    description: API for managing blog
+  - name: Posts
+    description: API for managing Posts
