@@ -1,8 +1,8 @@
 import { body } from 'express-validator';
 
-const titleValidation = body('name')
+const titleValidation = body('title')
   .isString()
-  .withMessage('name should be string')
+  .withMessage('title should be string')
   .trim()
   .isLength({ min: 2, max: 30 })
   .withMessage('Length of title is not correct');
