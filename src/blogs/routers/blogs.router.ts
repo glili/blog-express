@@ -11,7 +11,7 @@ import { superAdminGuardMiddleware } from '../../auth/middlewares/super-admin.gu
 
 export const blogsRouter = Router({});
 
-blogsRouter.use(superAdminGuardMiddleware);
+// blogsRouter.use(superAdminGuardMiddleware);
 
 blogsRouter
   .get('', getBlogListHandler)
@@ -21,6 +21,7 @@ blogsRouter
   .post(
     '',
     blogInputDtoValidation,
+    superAdminGuardMiddleware,
     inputValidationResultMiddleware,
     createBlogHandler,
   )
@@ -29,6 +30,7 @@ blogsRouter
     '/:id',
     idValidation,
     blogInputDtoValidation,
+    superAdminGuardMiddleware,
     inputValidationResultMiddleware,
     updateBlogHandler,
   )
@@ -36,6 +38,7 @@ blogsRouter
   .delete(
     '/:id',
     idValidation,
+    superAdminGuardMiddleware,
     inputValidationResultMiddleware,
     deleteBlogHandler,
   );
