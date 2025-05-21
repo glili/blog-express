@@ -11,8 +11,6 @@ import { superAdminGuardMiddleware } from '../../auth/middlewares/super-admin.gu
 
 export const postsRouter = Router({});
 
-postsRouter.use(superAdminGuardMiddleware);
-
 postsRouter
   .get('', getPostListHandler)
 
@@ -20,6 +18,7 @@ postsRouter
 
   .post(
     '',
+    superAdminGuardMiddleware,
     postInputDtoValidation,
     inputValidationResultMiddleware,
     createPostHandler,
@@ -28,6 +27,7 @@ postsRouter
   .put(
     '/:id',
     idValidation,
+    superAdminGuardMiddleware,
     postInputDtoValidation,
     inputValidationResultMiddleware,
     updatePostHandler,
@@ -35,6 +35,7 @@ postsRouter
 
   .delete(
     '/:id',
+    superAdminGuardMiddleware,
     idValidation,
     inputValidationResultMiddleware,
     deletePostHandler,
