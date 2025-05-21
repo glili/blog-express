@@ -1,8 +1,8 @@
 
 // @ts-ignore
-import express from 'express';
-// @ts-ignore
 import request from 'supertest';
+// @ts-ignore
+import express from 'express';
 import { setupApp } from '../../../src/setup-app';
 import { generateBasicAuthToken } from '../../utils/generate-admin-auth-token';
 import { HttpStatus } from '../../../src/core/types/http-statuses';
@@ -19,9 +19,9 @@ describe('Posts API body validation check', () => {
     await clearDb(app);
   });
 
-  it(`❌ should not create post when incorrect body passed; POST /api/posts'`, async () => {
+  it(`❌ should not create post when incorrect body passed; POST /posts'`, async () => {
     await request(app)
-      .post('/api/posts')
+      .post('/posts')
       .send({})
       .expect(HttpStatus.Unauthorized);
 

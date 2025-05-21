@@ -5,6 +5,5 @@ export function getBlogDto(): BlogInput {
     name: 'test',
     description: 'descr',
     websiteUrl: 'https://samurai.it-incubator.io/swagger?id=h02'
-
   };
 }
