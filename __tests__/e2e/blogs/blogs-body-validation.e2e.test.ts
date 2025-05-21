@@ -24,7 +24,7 @@ describe('Blog API body validation check', () => {
     await clearDb(app);
   });
 
-  it(`❌ should not create blog when incorrect body passed; POST /api/blogs'`, async () => {
+  it(`❌ should not create blog when incorrect body passed; POST /blogs'`, async () => {
     await request(app)
       .post(BLOGS_PATH)
       .send(correctTestBlogData)
@@ -73,7 +73,7 @@ describe('Blog API body validation check', () => {
     expect(blogListResponse.body).toHaveLength(0);
   });
 
-  it('❌ should not update blog when incorrect data passed; PUT /api/blogs/:id', async () => {
+  it('❌ should not update blog when incorrect data passed; PUT /blogs/:id', async () => {
     const createdBlog = await createBlog(app, correctTestBlogData);
 
     const invalidDataSet1 = await request(app)

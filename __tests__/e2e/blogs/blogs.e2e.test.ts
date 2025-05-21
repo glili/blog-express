@@ -23,7 +23,7 @@ describe('Blog API', () => {
     await clearDb(app);
   });
 
-  it('✅ should create blog; POST /api/blogs', async () => {
+  it('✅ should create blog; POST /blogs', async () => {
     const newBlog: BlogInput = {
       ...getBlogDto(),
       name: 'Feodor',
@@ -33,7 +33,7 @@ describe('Blog API', () => {
     await createBlog(app, newBlog);
   });
 
-  it('✅ should return blogs list; GET /api/blogs', async () => {
+  it('✅ should return blogs list; GET /blogs', async () => {
     await createBlog(app);
     await createBlog(app);
 
@@ -46,7 +46,7 @@ describe('Blog API', () => {
     expect(response.body.length).toBeGreaterThanOrEqual(2);
   });
 
-  it('✅ should return BLOG by id; GET /api/blogs/:id', async () => {
+  it('✅ should return BLOG by id; GET /blogs/:id', async () => {
     const createdBlog = await createBlog(app);
 
     const blog = await getBlogById(app, createdBlog.id);
@@ -58,7 +58,7 @@ describe('Blog API', () => {
     });
   });
 
-  it('✅ should update blog; PUT /api/blogs/:id', async () => {
+  it('✅ should update blog; PUT /blogs/:id', async () => {
     const createdBlog = await createBlog(app);
 
     const blogUpdateData: BlogInput = {
@@ -78,7 +78,7 @@ describe('Blog API', () => {
     });
   });
 
-  it('✅ should delete blog and check after "NOT FOUND"; DELETE /api/blogs/:id', async () => {
+  it('✅ should delete blog and check after "NOT FOUND"; DELETE /blogs/:id', async () => {
     const createdBlog = await createBlog(app);
 
     await request(app)

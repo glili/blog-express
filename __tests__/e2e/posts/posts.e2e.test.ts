@@ -18,11 +18,11 @@ describe('Posts API', () => {
     await clearDb(app);
   });
 
-  it('✅ should create post; POST /api/posts', async () => {
+  it('✅ should create post; POST /posts', async () => {
     await createPost(app);
   });
 
-  it('✅ should return posts list; GET /api/posts', async () => {
+  it('✅ should return posts list; GET /posts', async () => {
     await createPost(app);
 
     const postListResponse = await request(app)
@@ -34,7 +34,7 @@ describe('Posts API', () => {
     expect(postListResponse.body).toHaveLength(2);
   });
 
-  it('✅ should return post by id; GET /api/posts/:id', async () => {
+  it('✅ should return post by id; GET /posts/:id', async () => {
     const createdPost = await createPost(app);
 
     const getPost = await getPostById(app, createdPost.id);
