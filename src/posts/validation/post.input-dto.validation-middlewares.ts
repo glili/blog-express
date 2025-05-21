@@ -22,8 +22,8 @@ const contentValidation = body('content')
   .withMessage('Length of content is not correct');
 
   const blogIdValidation = body('blogId')
-  .isInt({ gt: 0 })
-  .withMessage('ID must be a number');
+  .isString()
+  .withMessage('ID must be a string');
 
 export const postInputDtoValidation = [
   titleValidation,
