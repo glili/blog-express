@@ -3,4 +3,5 @@ export type PostCreateInput = {
   shortDescription: string;
   content: string;
   blogId: string;
+  blogName: string;
 };

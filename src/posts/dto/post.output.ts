@@ -3,4 +3,5 @@ export type PostOutput = {
   shortDescription: string;
   content: string;
   blogId: string;
+  blogName: string;
 };
