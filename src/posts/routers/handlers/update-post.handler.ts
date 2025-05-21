@@ -8,7 +8,7 @@ export function updatePostHandler(
   req: Request<{ id: string }, {}, PostInput>,
   res: Response,
 ) {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const post = postsRepository.findById(id);
 
   if (!post) {
