@@ -3,4 +3,5 @@ export type PostUpdateInput = {
   shortDescription: string;
   content: string;
   blogId: string;
+  blogName: string;
 };
