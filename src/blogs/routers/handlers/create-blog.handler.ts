@@ -6,18 +6,16 @@ import { Blog } from '../../types/blog';
 import { blogsRepository } from '../../repositories/blogs.repository';
 
 export function createBlogHandler(
-    req: Request<{}, {}, BlogInput>,
-    res: Response,
+  req: Request<{}, {}, BlogInput>,
+  res: Response,
 ) {
-  const lastId = db.blogs.length > 0 ? Number(db.blogs[db.blogs.length - 1].id) : 0;
-
   const newBlog: Blog = {
-    id: String(lastId + 1), // ✅ ensure id is string
+    id: db.blogs.length ? db.blogs[db.blogs.length - 1].id + 1 : 1,
     name: req.body.name,
     description: req.body.description,
     websiteUrl: req.body.websiteUrl,
   };
 
   blogsRepository.create(newBlog);
-  res.status(HttpStatus.Created).send(newBlog); // ✅ correct response
+  res.status(HttpStatus.Created).send(newBlog);
 }
