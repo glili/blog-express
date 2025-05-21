@@ -20,7 +20,7 @@ export function createPostHandler(
     res
         .status(HttpStatus.BadRequest)
         .send(
-            createErrorMessages([{ field: 'id', message: 'Driver not found' }]),
+            createErrorMessages([{ message: 'Blog not found', field: 'id' }]),
         );
 
     return;
