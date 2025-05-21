@@ -11,7 +11,7 @@ export function createPostHandler(
   res: Response,
 ) {
   const newPost: Post = {
-    id: db.posts.length ? db.posts[db.posts.length - 1].id + 1 : 1,
+    id: String(db.posts.length ? db.posts[db.posts.length - 1].id + 1 : 1),
     title: req.body.title,
     shortDescription: req.body.shortDescription,
     content: req.body.content,
