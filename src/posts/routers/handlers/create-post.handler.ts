@@ -16,7 +16,7 @@ export function createPostHandler(
     shortDescription: req.body.shortDescription,
     content: req.body.content,
     blogId: req.body.blogId,
-    blogName: req.body.blogName,
+    blogName: blog.blogName,
   };
 
   postsRepository.create(newPost);
