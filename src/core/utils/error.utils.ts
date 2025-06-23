@@ -1,7 +1,7 @@
-import { ValidationError } from '../../blogs/types/validationError';
+import { DriverViewModel } from '../../blogs/types/blog-view-model';
 
 export const createErrorMessages = (
-  errors: ValidationError[],
-): { errorsMessages: ValidationError[] } => {
+  errors: DriverViewModel[],
+): { errorsMessages: DriverViewModel[] } => {
   return { errorsMessages: errors };
 };

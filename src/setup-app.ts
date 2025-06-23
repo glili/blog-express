@@ -6,10 +6,10 @@ import { testingRouter } from './testing/routers/testing.router';
 
 export const setupApp = (app: Express) => {
   app.use(express.json());
-
-  app.get('/', (req, res) => {
-    res.status(200).send('Blog app!');
-  });
+  //
+  // app.get('/', (req, res) => {
+  //   res.status(200).send('Blog app!');
+  // });
 
   app.use(BLOGS_PATH, blogsRouter);
   app.use(TESTING_PATH, testingRouter);

@@ -1,44 +1,51 @@
 import { Blog } from '../types/blog';
-import { db } from '../../db/in-memory.db';
+import { blogCollection } from '../../db/mongo.db';
 import { BlogInput } from '../dto/blog.input';
+import { ObjectId, WithId } from 'mongodb';
+
 
 export const blogsRepository = {
-  findAll(): Blog[] {
-    return db.blogs;
+  findAll(): Promise<WithId<Blog>[]> {
+    return blogCollection.find().toArray();
   },
 
-  findById(id: string): Blog | null {
-    return db.blogs.find((d) => d.id === id) ?? null;
+  async findById(id: string): Promise<WithId<Blog> | null> {
+    return blogCollection.findOne({ _id: new ObjectId(id) });
   },
 
-  create(newBlog: Blog): Blog {
-    db.blogs.push(newBlog);
-
-    return newBlog;
+  async create(newBlog: Blog ): Promise<WithId<Blog>> {
+    const insertResult = await blogCollection.insertOne(newBlog);
+    return { ...newBlog, _id: insertResult.insertedId };
   },
 
-  update(id: string, dto: BlogInput): void {
-    const blog = db.blogs.find((d) => d.id === id);
+  async update(id: string, dto: BlogInput): Promise<void> {
+    const updateResult = await blogCollection.updateOne(
+        {
+          _id: new ObjectId(id),
+        },
+        {
+          $set: {
+            name: dto.name,
+            description: dto.description,
+            websiteUrl: dto.websiteUrl,
+          },
+        },
+    );
 
-    if (!blog) {
-      throw new Error('Blog do not exist');
+    if (updateResult.matchedCount < 1) {
+      throw new Error('Blog not exist');
     }
-
-    blog.name = dto.name;
-    blog.description = dto.description;
-    blog.websiteUrl = dto.websiteUrl;
-
     return;
   },
 
-  delete(id: string): void {
-    const index = db.blogs.findIndex((v) => v.id === id);
+  async delete(id: string): Promise<void> {
+    const deleteResult = await blogCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
 
-    if (index === -1) {
-      throw new Error('Blog do not exist');
+    if (deleteResult.deletedCount < 1) {
+      throw new Error('Blog not exist');
     }
-
-    db.blogs.splice(index, 1);
     return;
   },
 };

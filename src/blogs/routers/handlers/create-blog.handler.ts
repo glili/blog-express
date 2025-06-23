@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 import { BlogInput } from '../../dto/blog.input';
 import { HttpStatus } from '../../../core/types/http-statuses';
-import { db } from '../../../db/in-memory.db';
 import { Blog } from '../../types/blog';
 import { blogsRepository } from '../../repositories/blogs.repository';
+import { mapToBlogViewModel } from '../mappers/map-to-blog-view-model.util';
 
 export function createBlogHandler(
   req: Request<{}, {}, BlogInput>,
   res: Response,
 ) {
   const newBlog: Blog = {
-    id: String(db.blogs.length ? db.blogs[db.blogs.length - 1].id + 1 : 1),
     name: req.body.name,
     description: req.body.description,
     websiteUrl: req.body.websiteUrl,
