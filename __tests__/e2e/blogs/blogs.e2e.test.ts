@@ -21,6 +21,9 @@ describe('Blog API', () => {
   const adminToken = generateBasicAuthToken();
 
   beforeAll(async () => {
+    await runDB(
+        'mongodb+srv://admin:admin@lesson.oxuydeq.mongodb.net/?retryWrites=true&w=majority&appName=lesson',
+    );
     await clearDb(app);
   });
 

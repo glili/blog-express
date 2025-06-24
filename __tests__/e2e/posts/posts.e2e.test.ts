@@ -7,6 +7,7 @@ import { clearDb } from '../../utils/clear-db';
 import { createPost } from '../../utils/posts/create-post';
 import { POSTS_PATH } from '../../../src/core/paths/paths';
 import { getPostById } from '../../utils/posts/get-post-by-id';
+import { runDB } from '../../../src/db/mongo.db';
 
 describe('Posts API', () => {
   const app = express();
@@ -15,6 +16,9 @@ describe('Posts API', () => {
   const adminToken = generateBasicAuthToken();
 
   beforeAll(async () => {
+    await runDB(
+        'mongodb+srv://admin:admin@lesson.oxuydeq.mongodb.net/?retryWrites=true&w=majority&appName=lesson',
+    );
     await clearDb(app);
   });
 
