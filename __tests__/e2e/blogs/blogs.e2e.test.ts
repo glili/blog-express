@@ -12,6 +12,7 @@ import { createBlog } from '../../utils/blogs/create-blog';
 import { clearDb } from '../../utils/clear-db';
 import { getBlogById } from '../../utils/blogs/get-blog-by-id';
 import { updateBlog } from '../../utils/blogs/update-blog';
+import { runDB } from '../../../src/db/mongo.db';
 
 describe('Blog API', () => {
   const app = express();

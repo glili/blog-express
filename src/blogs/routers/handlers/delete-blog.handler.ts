@@ -4,7 +4,7 @@ import { blogsRepository } from '../../repositories/blogs.repository';
 import { createErrorMessages } from '../../../core/middlewares/validation/input-validation-result.middleware';
 import { postsRepository } from '../../../posts/repositories/posts.repository';
 
-export function deleteBlogHandler(req: Request, res: Response) {
+export async function deleteBlogHandler(req: Request, res: Response) {
   try {
     const id = req.params.id;
     const blog = await blogsRepository.findById(id);

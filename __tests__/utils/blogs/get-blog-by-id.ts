@@ -3,12 +3,12 @@ import { Express } from 'express';
 import { HttpStatus } from '../../../src/core/types/http-statuses';
 import { BLOGS_PATH } from '../../../src/core/paths/paths';
 import { generateBasicAuthToken } from '../generate-admin-auth-token';
-import { Blog } from '../../../src/blogs/types/blog';
+import { BlogViewModel } from '../../../src/blogs/types/blog-view-model';
 
 export async function getBlogById(
   app: Express,
-  blogId: number,
-): Promise<Blog> {
+  blogId: string,
+): Promise<BlogViewModel> {
   const blogResponse = await request(app)
     .get(`${BLOGS_PATH}/${blogId}`)
     .set('Authorization', generateBasicAuthToken())

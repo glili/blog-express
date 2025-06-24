@@ -4,7 +4,7 @@ import { HttpStatus } from '../../../core/types/http-statuses';
 import { blogsRepository } from '../../repositories/blogs.repository';
 import { createErrorMessages } from '../../../core/middlewares/validation/input-validation-result.middleware';
 
-export function updateBlogHandler(
+export async function updateBlogHandler(
     req: Request<{ id: string }, {}, BlogInput>,
     res: Response,
 ) {

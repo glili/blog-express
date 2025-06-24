@@ -11,6 +11,7 @@ import { getBlogDto } from '../../utils/blogs/get-blog-dto';
 import { clearDb } from '../../utils/clear-db';
 import { createBlog } from '../../utils/blogs/create-blog';
 import { getBlogById } from '../../utils/blogs/get-blog-by-id';
+import { runDB, stopDb } from '../../../src/db/mongo.db';
 
 describe('Blog API body validation check', () => {
   const app = express();
@@ -23,6 +24,10 @@ describe('Blog API body validation check', () => {
   beforeAll(async () => {
     await clearDb(app);
   });
+
+  afterAll(async () => {
+        await stopDb();
+    });
 
   it(`❌ should not create blog when incorrect body passed; POST /blogs'`, async () => {
     await request(app)

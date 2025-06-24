@@ -8,7 +8,7 @@ import { generateBasicAuthToken } from '../generate-admin-auth-token';
 
 export async function updateBlog(
   app: Express,
-  blogId: number,
+  blogId: string,
   blogDto?: BlogInput,
 ): Promise<void> {
   const defaultBlogData: BlogInput = getBlogDto();

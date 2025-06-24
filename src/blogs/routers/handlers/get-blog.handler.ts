@@ -4,7 +4,7 @@ import { createErrorMessages } from '../../../core/middlewares/validation/input-
 import { blogsRepository } from '../../repositories/blogs.repository';
 import {mapToBlogViewModel} from "../mappers/map-to-blog-view-model.util";
 
-export function getBlogHandler(req: Request, res: Response) {
+export async function getBlogHandler(req: Request, res: Response) {
   try {
     const id = req.params.id;
     const blog = await blogsRepository.findById(id);

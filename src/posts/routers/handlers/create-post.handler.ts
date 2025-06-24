@@ -1,39 +1,45 @@
 import { Request, Response } from 'express';
-import { PostInput } from '../../dto/post.input';
 import { HttpStatus } from '../../../core/types/http-statuses';
-import { db } from '../../../db/in-memory.db';
 import { Post } from '../../types/post';
 import { postsRepository } from '../../repositories/posts.repository';
-import { PostCreateInput } from '../../dto/post-create.input';
 import {blogsRepository} from "../../../blogs/repositories/blogs.repository";
-import {createErrorMessages} from "../../../core/utils/error.utils";
+import {createErrorMessages} from '../../../core/middlewares/validation/input-validation-result.middleware';
+import { mapToPostViewModelUtil } from '../mappers/map-to-post-view-model.util';
+import {PostCreateInput} from "../../dto/post-create.input";
 
-export function createPostHandler(
+export async function createPostHandler(
   req: Request<{}, {}, PostCreateInput>,
   res: Response,
 ) {
-  const blogId = req.body.blogId;
+  try {
+    const blogId = req.body.blogId;
 
-  const blog = blogsRepository.findById(blogId);
+    const blog = await blogsRepository.findById(blogId);
 
-  if (!blog) {
-    res
-        .status(HttpStatus.BadRequest)
-        .send(
-            createErrorMessages([{ message: 'Blog not found', field: 'id' }]),
-        );
+    if (!blog) {
+      res
+          .status(HttpStatus.BadRequest)
+          .send(
+              createErrorMessages([{message: 'Blog not found', field: 'id'}]),
+          );
 
-    return;
+      return;
+    }
+    const newPost: Post = {
+      title: req.body.title,
+      shortDescription: req.body.shortDescription,
+      content: req.body.content,
+      blog: {
+        id: req.body.blogId,
+        name: blog.name,
+      },
+      createdAt: new Date(),
+    };
+
+    const createdPost = await postsRepository.createPost(newPost);
+    const postViewModel = mapToPostViewModelUtil(createdPost);
+    res.status(HttpStatus.Created).send(postViewModel);
+  } catch (e:unknown) {
+    res.sendStatus(HttpStatus.InternalServerError);
   }
-  const newPost: Post = {
-    id: String(db.posts.length ? db.posts[db.posts.length - 1].id + 1 : 1),
-    title: req.body.title,
-    shortDescription: req.body.shortDescription,
-    content: req.body.content,
-    blogId: req.body.blogId,
-    blogName: blog.name,
-  };
-
-  postsRepository.create(newPost);
-  res.status(HttpStatus.Created).send(newPost);
 }
