@@ -30,7 +30,7 @@ describe('Blog API', () => {
   it('✅ should create blog; POST /blogs', async () => {
     const newBlog: BlogInput = {
       ...getBlogDto(),
-      name: 'Feodor',
+      name: 'Tech',
       websiteUrl: 'https://samurai.it-incubator.io/swagger?id=h02',
     };
 
@@ -57,7 +57,7 @@ describe('Blog API', () => {
 
     expect(blog).toEqual({
       ...createdBlog,
-      id: expect.any(Number),
+      id: expect.any(String),
       createdAt: expect.any(String),
     });
   });
@@ -76,8 +76,10 @@ describe('Blog API', () => {
     const blogResponse = await getBlogById(app, createdBlog.id);
 
     expect(blogResponse).toEqual({
-      ...blogUpdateData,
       id: createdBlog.id,
+      name: blogUpdateData.name,
+      description: blogUpdateData.name,
+      websiteUrl: blogUpdateData.websiteUrl,
       createdAt: expect.any(String),
     });
   });

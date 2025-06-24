@@ -7,7 +7,7 @@ import { clearDb } from '../../utils/clear-db';
 import { createPost } from '../../utils/posts/create-post';
 import { POSTS_PATH } from '../../../src/core/paths/paths';
 import { getPostById } from '../../utils/posts/get-post-by-id';
-import { runDB } from '../../../src/db/mongo.db';
+import { runDB, stopDb } from '../../../src/db/mongo.db';
 
 describe('Posts API', () => {
   const app = express();
@@ -20,6 +20,10 @@ describe('Posts API', () => {
         'mongodb+srv://admin:admin@lesson.oxuydeq.mongodb.net/?retryWrites=true&w=majority&appName=lesson',
     );
     await clearDb(app);
+  });
+
+  afterAll(async () => {
+    await stopDb();
   });
 
   it('✅ should create post; POST /posts', async () => {
@@ -45,7 +49,7 @@ describe('Posts API', () => {
 
     expect(getPost).toEqual({
       ...createdPost,
-      id: expect.any(Number),
+      id: expect.any(String),
       createdAt: expect.any(String),
     });
   });
