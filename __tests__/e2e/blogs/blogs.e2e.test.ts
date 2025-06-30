@@ -1,6 +1,4 @@
-// @ts-ignore
 import request from 'supertest';
-// @ts-ignore
 import express from 'express';
 import { setupApp } from '../../../src/setup-app';
 import { HttpStatus } from '../../../src/core/types/http-statuses';
@@ -67,7 +65,7 @@ describe('Blog API', () => {
 
     const blogUpdateData: BlogInput = {
       name: 'Updated Name',
-      description: '999-888-7777',
+      description: 'test2',
       websiteUrl: 'https://samurai.it-incubator.io/swagger?id=h03',
     };
 
@@ -78,9 +76,10 @@ describe('Blog API', () => {
     expect(blogResponse).toEqual({
       id: createdBlog.id,
       name: blogUpdateData.name,
-      description: blogUpdateData.name,
+      description: blogUpdateData.description,
       websiteUrl: blogUpdateData.websiteUrl,
       createdAt: expect.any(String),
+      isMembership: createdBlog.isMembership
     });
   });
 

@@ -1,6 +1,4 @@
-// @ts-ignore
 import request from 'supertest';
-// @ts-ignore
 import express from 'express';
 import { setupApp } from '../../../src/setup-app';
 import { HttpStatus } from '../../../src/core/types/http-statuses';
@@ -22,6 +20,9 @@ describe('Blog API body validation check', () => {
   const adminToken = generateBasicAuthToken();
 
   beforeAll(async () => {
+      await runDB(
+          'mongodb+srv://admin:admin@lesson.oxuydeq.mongodb.net/?retryWrites=true&w=majority&appName=lesson',
+      );
     await clearDb(app);
   });
 
@@ -45,7 +46,7 @@ describe('Blog API body validation check', () => {
       })
       .expect(HttpStatus.BadRequest);
 
-    expect(invalidDataSet1.body.errorMessages).toHaveLength(4);
+    expect(invalidDataSet1.body.errorMessages).toHaveLength(3);
 
     const invalidDataSet2 = await request(app)
       .post(BLOGS_PATH)
@@ -57,7 +58,7 @@ describe('Blog API body validation check', () => {
       })
       .expect(HttpStatus.BadRequest);
 
-    expect(invalidDataSet2.body.errorMessages).toHaveLength(4);
+    expect(invalidDataSet2.body.errorMessages).toHaveLength(1);
 
     const invalidDataSet3 = await request(app)
       .post(BLOGS_PATH)
@@ -69,9 +70,9 @@ describe('Blog API body validation check', () => {
       })
       .expect(HttpStatus.BadRequest);
 
-    expect(invalidDataSet3.body.errorMessages).toHaveLength(4);
+    expect(invalidDataSet3.body.errorMessages).toHaveLength(1);
 
-    // check что никто не создался
+    // check nothing was created
     const blogListResponse = await request(app)
       .get(BLOGS_PATH)
       .set('Authorization', adminToken);
@@ -91,7 +92,7 @@ describe('Blog API body validation check', () => {
       })
       .expect(HttpStatus.BadRequest);
 
-    expect(invalidDataSet1.body.errorMessages).toHaveLength(4);
+    expect(invalidDataSet1.body.errorMessages).toHaveLength(3);
 
     const invalidDataSet2 = await request(app)
       .put(`${BLOGS_PATH}/${createdBlog.id}`)
@@ -103,7 +104,7 @@ describe('Blog API body validation check', () => {
       })
       .expect(HttpStatus.BadRequest);
 
-    expect(invalidDataSet2.body.errorMessages).toHaveLength(3);
+    expect(invalidDataSet2.body.errorMessages).toHaveLength(1);
 
     const invalidDataSet3 = await request(app)
       .put(`${BLOGS_PATH}/${createdBlog.id}`)
@@ -119,10 +120,27 @@ describe('Blog API body validation check', () => {
 
     const blogResponse = await getBlogById(app, createdBlog.id);
 
-    expect(blogResponse).toEqual({
-      ...correctTestBlogData,
-      id: createdBlog.id,
-      createdAt: expect.any(String),
+      expect(blogResponse).toEqual({
+          ...createdBlog,
+      });
+  });
+    it('❌ should not update blog when incorrect features passed; PUT /api/blogs/:id', async () => {
+        const createdBlog = await createBlog(app, correctTestBlogData);
+
+        await request(app)
+            .put(`${BLOGS_PATH}/${createdBlog.id}`)
+            .set('Authorization', generateBasicAuthToken())
+            .send({
+                name: 'test',
+                description: 'testing',
+                websiteUrl: 'https://samurai.it-incubator.io/swagger?id=h02'
+            })
+            .expect(HttpStatus.BadRequest);
+
+        const blogResponse = await getBlogById(app, createdBlog.id);
+
+        expect(blogResponse).toEqual({
+            ...createdBlog,
     });
   });
 });

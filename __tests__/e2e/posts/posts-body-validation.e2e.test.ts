@@ -1,13 +1,12 @@
 
-// @ts-ignore
 import request from 'supertest';
-// @ts-ignore
 import express from 'express';
 import { setupApp } from '../../../src/setup-app';
 import { generateBasicAuthToken } from '../../utils/generate-admin-auth-token';
 import { HttpStatus } from '../../../src/core/types/http-statuses';
 import { clearDb } from '../../utils/clear-db';
 import { POSTS_PATH } from '../../../src/core/paths/paths';
+import {runDB} from "../../../src/db/mongo.db";
 
 describe('Posts API body validation check', () => {
   const app = express();
@@ -16,6 +15,9 @@ describe('Posts API body validation check', () => {
   const adminToken = generateBasicAuthToken();
 
   beforeAll(async () => {
+      await runDB(
+          'mongodb+srv://admin:admin@lesson.oxuydeq.mongodb.net/?retryWrites=true&w=majority&appName=lesson',
+      );
     await clearDb(app);
   });
 
