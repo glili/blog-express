@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { HttpStatus } from '../../../core/types/http-statuses';
 import { Post } from '../../types/post';
 import { postsRepository } from '../../repositories/posts.repository';
-import {blogsRepository} from "../../../blogs/repositories/blogs.repository";
-import {createErrorMessages} from '../../../core/middlewares/validation/input-validation-result.middleware';
+import { blogsRepository } from "../../../blogs/repositories/blogs.repository";
+import { createErrorMessages } from '../../../core/middlewares/validation/input-validation-result.middleware';
 import { mapToPostViewModelUtil } from '../mappers/map-to-post-view-model.util';
-import {PostCreateInput} from "../../dto/post-create.input";
+import { PostCreateInput } from "../../dto/post-create.input";
 
 export async function createPostHandler(
   req: Request<{}, {}, PostCreateInput>,
