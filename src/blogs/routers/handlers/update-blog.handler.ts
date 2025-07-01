@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
-import { BlogInput } from '../../dto/blog.input';
+import { BlogUpdateInput } from '../../dto/blog-update.input';
 import { HttpStatus } from '../../../core/types/http-statuses';
 import { blogsRepository } from '../../repositories/blogs.repository';
 import { createErrorMessages } from '../../../core/middlewares/validation/input-validation-result.middleware';
 
 export async function updateBlogHandler(
-    req: Request<{ id: string }, {}, BlogInput>,
+    req: Request<{ id: string }, {}, BlogUpdateInput>,
     res: Response,
 ) {
   try {
     const id = req.params.id;
-    const blog = blogsRepository.findById(id);
+    const blog = await blogsRepository.findById(id);
 
     if (!blog) {
       res
