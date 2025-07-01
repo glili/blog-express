@@ -47,7 +47,7 @@ describe('Posts API body validation check', () => {
         title: 'LA', // short string
         shortDescription: 'gg',
         content: 'by',
-        driverId: 0, //can not be 0
+        blogId: 0, //can not be 0
       })
       .expect(HttpStatus.BadRequest);
 

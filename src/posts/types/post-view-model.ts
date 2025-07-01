@@ -3,9 +3,7 @@ export type PostViewModel = {
     title: string;
     shortDescription: string;
     content: string;
-    blog: {
-        id: string;
-        name: string;
-    };
+    blogId: string;
+    blogName: string;
     createdAt: Date;
 };

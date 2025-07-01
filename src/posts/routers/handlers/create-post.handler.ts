@@ -29,10 +29,8 @@ export async function createPostHandler(
       title: req.body.title,
       shortDescription: req.body.shortDescription,
       content: req.body.content,
-      blog: {
-        id: req.body.blogId,
-        name: blog.name,
-      },
+      blogId: req.body.blogId,
+      blogName: blog.name,
       createdAt: new Date(),
     };
 

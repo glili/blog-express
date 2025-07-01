@@ -96,4 +96,7 @@ describe('Blog API', () => {
       .set('Authorization', adminToken)
       .expect(HttpStatus.NotFound);
   });
+  // it('✅ should delete blog and check after "NOT FOUND"; DELETE /blogs/:id', async () => {
+  //   await clearDb(app);
+  // });
 });
